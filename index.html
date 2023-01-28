@@ -29,7 +29,6 @@
 
   <!-- Template Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet">
-
 </head>
 
 <body>
@@ -123,7 +122,18 @@
       <div class="container" data-aos="fade-up">
 
         <div class="row">
-          <div class="image col-lg-6" style='background-image: url("assets/img/features.jpg");' data-aos="fade-right">
+          <div class="col-lg-6" data-aos="fade-right" id="video-box">
+              <video autoplay poster="http://placehold.it/350x350" controls style="width: 100%;">
+                <source src="./assets/img/introVid.mp4" type="video/mp4">
+                <!-- <source src="https://www.w3schools.com/html/mov_bbb.ogg" type="video/ogg"> -->
+                Your browser does not support HTML5 video.
+                <script>
+                  var video = document.currentScript.parentElement;
+                  video.volume = 0.5;
+                  </script>
+              </video>
+            <!-- <iframe id="ytplayer">Youtube player here</iframe> -->
+            <!-- <iframe width="100%" height="100%" id="introVideo" src="https://www.youtube.com/embed/xHLU-pGg8Ac?controls=0&amp;start=2&amp;rel=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe> -->
           </div>
           <div class="col-lg-6" data-aos="fade-left" data-aos-delay="100">
             <div class="icon-box mt-5 mt-lg-0" data-aos="zoom-in" data-aos-delay="150">
@@ -178,7 +188,7 @@
                     <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" required>
                   </div>
                 </div>
-                <div class="text-center mt-4"><button class="ebook-submit-btn" type="submit">Send Message</button></div>
+                <div class="text-center mt-4"><button class="ebook-submit-btn" type="submit">Download</button></div>
               </form>
             </div>
           </div>
@@ -500,10 +510,79 @@
   <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
   <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
   <script src="assets/vendor/php-email-form/validate.js"></script>
+  <!-- <script>
+      window.onscroll = function () {
 
-  <!-- Template Main JS File -->
+        //will trigger when your element comes into viewport
+        var hT = document.getElementById('#video-box').offsetTop(),
+          hH = document.getElementById('#video-box').outerHeight(),
+          wH = document.getElementById(window).outerHeight(),
+          wS = document.getElementById(this).scrollTop();
+          console.log(`ht: ${hT}, hH: ${hH}, wH: ${wH}, wS: ${wS}. Calc: ws: ${wS} > ht: ${hT} + hH: ${hH} - wH: ${wH} = ${wS > (hT + hH - wH)}`)
+        if (wS > (hT + hH - wH)) {
+          //appends &autoplay=1 to iFrame src, making it autoplay
+          var videoUrl = document.getElementById('#introVideo').attr('src');
+          console.log(videoUrl)
+          document.getElementById('#introVideo').attr('src', videoUrl + "&autoplay=1");
+        }
+      };
+  </script> -->
+  <script>
+    window.addEventListener('load', videoScroll);
+window.addEventListener('scroll', videoScroll);
+
+function videoScroll() {
+
+  if ( document.querySelectorAll('video[autoplay]').length > 0) {
+    var windowHeight = window.innerHeight,
+        videoEl = document.querySelectorAll('video[autoplay]');
+
+    for (var i = 0; i < videoEl.length; i++) {
+
+      var thisVideoEl = videoEl[i],
+          videoHeight = thisVideoEl.clientHeight,
+          videoClientRect = thisVideoEl.getBoundingClientRect().top;
+
+      if ( videoClientRect <= ( (windowHeight) - (videoHeight*.5) ) && videoClientRect >= ( 0 - ( videoHeight*.5 ) ) ) {
+        thisVideoEl.play();
+      } else {
+        thisVideoEl.pause();
+      }
+
+    }
+  }
+
+}
+    // window.onscroll = function() {
+    //     var dv = document.getElementById('video-box');
+    //     var v = document.getElementById('introVideo');
+    //     console.log((window.scrollY < (dv.offsetTop + dv.offsetHeight)) && ((window.scrollY + window.outerHeight) > dv.offsetTop))
+    //     if ((window.scrollY < (dv.offsetTop + dv.offsetHeight)) && ((window.scrollY + window.outerHeight) > dv.offsetTop)) {
+    //           //
+    //     } else {
+    //       var videoUrl = document.getElementById('#introVideo').attr('src');
+    //       console.log(videoUrl);
+    //       document.getElementById('#introVideo').attr('src', videoUrl + "&amp;autoplay=1");
+    //     }
+    // }
+</script>
   <script src="assets/js/main.js"></script>
 
 </body>
 
 </html>
+
+ <script>
+     window.onscroll = function() {
+         var dv = document.getElementById('video-box');
+         var v = document.getElementById('introVideo');
+         console.log((window.scrollY < (dv.offsetTop + dv.offsetHeight)) && ((window.scrollY + window.outerHeight) > dv.offsetTop))
+         if ((window.scrollY < (dv.offsetTop + dv.offsetHeight)) && ((window.scrollY + window.outerHeight) > dv.offsetTop)) {
+             if (v.src=='' || v.src==location.href) {
+                 v.src='';
+             }
+         } else {
+             v.src='https://www.youtube.com/embed/xHLU-pGg8Ac?controls=0&amp;start=2&amp;autoplay=1&amp;rel=0';
+         }
+     }
+ </script>
